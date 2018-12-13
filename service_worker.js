@@ -1,28 +1,6 @@
-// キャッシュファイルの指定
-var CACHE_NAME = 'pwa-sample-caches-v1-002';
-var urlsToCache = [
- '/poster-keisuke.github.io/',
-];
-
-// インストール処理
-self.addEventListener('install', function(event) {
- event.waitUntil(
-  caches
-  .open(CACHE_NAME)
-  .then(function(cache) {
-   return cache.addAll(urlsToCache);
-  })
- );
-});
-
-// リソースフェッチ時のキャッシュロード処理
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
  event.respondWith(
-  caches
-  .match(event.request)
-  .then(function(response) {
-   return response ? response : fetch(event.request);
-  })
+  new Response('サービスワーカーが動いています！')
  );
 });
 
@@ -39,7 +17,6 @@ self.addEventListener('push', function (event) {
   })
  );
 });
-
 self.addEventListener('notificationclick', function (event) {
  event.notification.close();
  clients.openWindow("/");
